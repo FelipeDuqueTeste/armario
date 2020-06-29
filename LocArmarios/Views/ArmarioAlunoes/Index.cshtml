@@ -1,0 +1,138 @@
+﻿@model IEnumerable<LocArmarios.Models.Armario>
+
+@{
+   
+    var ListaArmariosLocados = (IEnumerable<LocArmarios.Models.ArmarioAluno>)ViewBag.ListaArmariosLocados;
+}
+
+<h2> @ViewBag.Title | Ármarios</h2>
+<style>
+    .box {
+        box-shadow: 2px 2px 2px rgba(99, 190, 255, 0.51)
+    }
+
+        .box:hover {
+            box-shadow: 3px 3px 3px rgb(89, 164, 217)
+        }
+</style>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        var CorArea = item.Id < 7 ? "#f1f1f1f1" : "#e1e1e1e1";
+
+        if (item.Id == 1 || item.Id == 7)
+        {
+            <div class="col-md-12 text-center alert-success">
+                <h4>BLOCO: @item.Bloco</h4>
+            </div>
+        }
+
+        <div class="col-sm-2 box" style="padding-right:5px;height:100px">
+            <div class="col-sm-12 text-center">
+                <div class="col-md-12">
+                    <h6>ARMARIO: @item.Numero</h6>
+                </div>
+                <div class="col-md-12">
+                    @if (ListaArmariosLocados.Where(x => x.ArmarioId == item.Id).Count() > 0)
+                     {
+                              
+                                <a href="@Url.Action("Edit", "ArmarioAlunoes", new { Id = ListaArmariosLocados.Where(x => x.ArmarioId == item.Id).FirstOrDefault().Id })" class="btn btn-danger btn-sm">Devolver <span class="glyphicon glyphicon-lock"></span></a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Create", "ArmarioAlunoes", new { Id = item.Id })" class="btn btn-primary btn-sm">Locar <span class="glyphicon glyphicon-tag"></span></a>
+
+                    }
+
+                </div>
+                @if (ListaArmariosLocados.Where(x => x.ArmarioId == item.Id).ToList().Count > 0)
+                {
+                    <div class="col-md-12" style="border-top:1px solid #eaeaea;margin-top:15px;cursor:pointer" title="Locado para @(ListaArmariosLocados.Where(x => x.ArmarioId == item.Id).Select(x => x.Aluno).FirstOrDefault().Nome)">
+                        <small><strong>Locado: @(ListaArmariosLocados.Where(x => x.ArmarioId == item.Id).Select(x => x.Aluno).FirstOrDefault().Ra)</strong></small>                      
+                    </div>
+                }
+
+
+
+                </div>
+        </div>
+    }
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@model IEnumerable<LocArmarios.Models.ArmarioAluno>
+
+    @{
+        ViewBag.Title = "Index";
+    }
+
+    <h2>Index</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Aluno.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Armario.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataLocacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataFimLocacao)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aluno.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Armario.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataLocacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataFimLocacao)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+    }
+
+    </table>*@
